@@ -69,7 +69,7 @@ services:
       - GF_LOG_MODE=console
       - GF_LOG_LEVEL=critical
     ports:
-      - 3000:3000
+      - 3100:3000
 
 networks:
   piko-network:
