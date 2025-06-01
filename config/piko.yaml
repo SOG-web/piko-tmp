@@ -1,5 +1,28 @@
 cluster:
-  join:
-    - piko-1
-    - piko-2
-    - piko-3
+  # Use Docker's DNS-based service discovery
+  join: []
+  advertise_address: "{{.Service.Hostname}}.piko"
+
+# Configure admin API to listen on all interfaces
+admin:
+  listen_addr: ":8001"
+
+# Configure proxy to listen on all interfaces
+proxy:
+  http_listen_addr: ":8000"
+  tcp_listen_addr: ":8002"
+  tls:
+    enabled: false
+
+# Enable metrics for Prometheus
+observability:
+  metrics:
+    enabled: true
+    path: /metrics
+    port: 9000
+
+# Configure logging
+log:
+  level: info
+  format: json
+  disable_timestamp: false
