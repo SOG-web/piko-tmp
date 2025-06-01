@@ -45,9 +45,9 @@ services:
       - "piko-2"
       - "piko-3"
     ports:
-      - 8080:8000
-      - 8081:8001
-      - 8082:8002
+      - 8180:8000
+      - 8181:8001
+      - 8182:8002
 
   prometheus:
     image: prom/prometheus:latest
