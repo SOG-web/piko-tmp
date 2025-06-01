@@ -3,11 +3,11 @@ services:
   piko-1:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/etc/piko
+      - ./config/piko:/config/piko
     command:
       - server
       - --config.path
-      - /etc/piko/piko.yml
+      - /config/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
@@ -15,11 +15,11 @@ services:
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/etc/piko
+      - ./config/piko:/config/piko
     command:
       - server
       - --config.path
-      - /etc/piko/piko.yml
+      - /config/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-2-
     hostname: piko-2
@@ -27,11 +27,11 @@ services:
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/etc/piko
+      - ./config/piko:/config/piko
     command:
       - server
       - --config.path
-      - /etc/piko/piko.yml
+      - /config/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-3-
     hostname: piko-3
@@ -39,7 +39,7 @@ services:
   load-balancer:
     image: caddy:latest
     volumes:
-      - ./config/caddy:/etc/caddy
+      - ./config/caddy:/config/caddy
     depends_on:
       - "piko-1"
       - "piko-2"
@@ -52,10 +52,10 @@ services:
   prometheus:
     image: prom/prometheus:latest
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/config/prometheus/prometheus.yml
       - --log.level=error
     volumes:
-      - ./config/prometheus:/etc/prometheus/
+      - ./config/prometheus:/config/prometheus/
     depends_on:
       - "piko-1"
       - "piko-2"
