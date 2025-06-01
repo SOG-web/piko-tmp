@@ -5,50 +5,41 @@ services:
     command:
       - server
       - --config.path
-      - /etc/piko.yaml
+      - /etc/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
     volumes:
-      - type: bind
-        source: ${PWD}/config/piko.yaml
-        target: /etc/piko.yaml
-        read_only: true
+      - ./config/piko:/etc/piko
 
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
     command:
       - server
       - --config.path
-      - /etc/piko.yaml
+      - /etc/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-2-
     hostname: piko-2
     volumes:
-      - type: bind
-        source: ${PWD}/config/piko.yaml
-        target: /etc/piko.yaml
-        read_only: true
+      - ./config/piko:/etc/piko
 
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
     command:
       - server
       - --config.path
-      - /etc/piko.yaml
+      - /etc/piko/piko.yml
       - --cluster.node-id-prefix
       - piko-3-
     hostname: piko-3
     volumes:
-      - type: bind
-        source: ${PWD}/config/piko.yaml
-        target: /etc/piko.yaml
-        read_only: true
+      - ./config/piko:/etc/piko
 
   load-balancer:
     image: caddy:latest
     volumes:
-      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./config/caddy:/etc/caddy
     depends_on:
       - "piko-1"
       - "piko-2"
