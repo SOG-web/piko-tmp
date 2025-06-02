@@ -12,3 +12,9 @@
 piko.urikaa.com {
 	reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
 }
+:80 {
+    reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
+}
+:443 {
+    reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
+}
