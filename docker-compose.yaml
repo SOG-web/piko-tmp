@@ -1,14 +1,14 @@
 version: "3.4"
 services:
   piko:
-    image: ghcr.io/andydunstall/piko:latest
+    image: ghcr.io/andydunstall/piko:v0.6.6
     command:
       - server
     hostname: piko
     ports:
-      - 8000
-      - 8001
-      - 8002
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
     expose:
       - 8000
       - 8001
