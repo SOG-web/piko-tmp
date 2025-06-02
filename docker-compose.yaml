@@ -1,11 +1,101 @@
 version: "3.4"
 services:
-  piko:
+  piko-1:
     image: ghcr.io/andydunstall/piko:latest
+    volumes:
+      - ./config/piko.yaml:/etc/piko.yaml
     command:
       - server
-    hostname: piko
+      - --config.path
+      - /etc/piko.yaml
+      - --cluster.node-id-prefix
+      - piko-1-
+    hostname: piko-1
     ports:
       - 8000
       - 8001
       - 8002
+    networks:
+      - piko-network
+
+  piko-2:
+    image: ghcr.io/andydunstall/piko:latest
+    volumes:
+      - ./config/piko.yaml:/etc/piko.yaml
+    command:
+      - server
+      - --config.path
+      - /etc/piko.yaml
+      - --cluster.node-id-prefix
+      - piko-2-
+    hostname: piko-2
+    ports:
+      - 8000
+      - 8001
+      - 8002
+    networks:
+      - piko-network
+
+  piko-3:
+    image: ghcr.io/andydunstall/piko:latest
+    volumes:
+      - ./config/piko.yaml:/etc/piko.yaml
+    command:
+      - server
+      - --config.path
+      - /etc/piko.yaml
+      - --cluster.node-id-prefix
+      - piko-3-
+    hostname: piko-3
+    ports:
+      - 8000
+      - 8001
+      - 8002
+    networks:
+      - piko-network
+
+  load-balancer:
+    image: caddy:latest
+    volumes:
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - "piko-1"
+      - "piko-2"
+      - "piko-3"
+    ports:
+      - 8000
+      - 8001
+      - 8002
+    networks:
+      - piko-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - --config.file=/config/prometheus/prometheus.yml
+      - --log.level=error
+    volumes:
+      - ./config/prometheus:/config/prometheus/
+    depends_on:
+      - "piko-1"
+      - "piko-2"
+      - "piko-3"
+    ports:
+      - 9090:9090
+    networks:
+      - piko-network
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_LOG_MODE=console
+      - GF_LOG_LEVEL=critical
+    ports:
+      - 3100:3000
+    networks:
+      - piko-network
+
+networks:
+  piko-network:
+    driver: bridge
+    name: piko-network
