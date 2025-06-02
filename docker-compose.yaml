@@ -50,7 +50,7 @@ services:
   load-balancer:
     image: caddy:latest
     volumes:
-      - ./config/caddy:/config/caddy
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
     depends_on:
       - "piko-1"
       - "piko-2"
