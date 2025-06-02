@@ -13,7 +13,6 @@ services:
     hostname: piko-1
     networks:
       - piko-network
-      - dokploy-network
 
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
@@ -28,7 +27,6 @@ services:
     hostname: piko-2
     networks:
       - piko-network
-      - dokploy-network
 
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
@@ -43,7 +41,6 @@ services:
     hostname: piko-3
     networks:
       - piko-network
-      - dokploy-network
 
   load-balancer:
     image: caddy:latest
@@ -90,5 +87,3 @@ networks:
   piko-network:
     driver: bridge
     name: piko-network
-  dokploy-network:
-    external: true
