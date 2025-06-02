@@ -26,13 +26,7 @@
 	reverse_proxy piko-1:8002 piko-2:8002 piko-3:8002
 }
 
-piko.urikaa.com {
-	log {
-		output stdout
-		format console
-	}
-	reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
-}
+
 :80 {
 	log {
 		output stdout
