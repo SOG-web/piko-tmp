@@ -2,7 +2,7 @@
 	debug
 }
 
-:8180 {
+:8000 {
 	log {
 		output stdout
 		format console
@@ -10,7 +10,7 @@
 	reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
 }
 
-:8181 {
+:8001 {
 	log {
 		output stdout
 		format console
@@ -18,26 +18,10 @@
 	reverse_proxy piko-1:8001 piko-2:8001 piko-3:8001
 }
 
-:8182 {
+:8002 {
 	log {
 		output stdout
 		format console
 	}
 	reverse_proxy piko-1:8002 piko-2:8002 piko-3:8002
-}
-
-
-:80 {
-	log {
-		output stdout
-		format console
-	}
-    reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
-}
-:443 {
-	log {
-		output stdout
-		format console
-	}
-    reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
 }
