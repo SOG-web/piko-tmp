@@ -58,6 +58,24 @@ services:
     #   - 8182:8002
     networks:
       - piko-network
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+
+      # HTTP Router (for redirect to HTTPS)
+      - traefik.http.routers.piko-server-ihitlh-1-web.rule=Host(`piko.urikaa.com`)
+      - traefik.http.routers.piko-server-ihitlh-1-web.entrypoints=web
+      - traefik.http.routers.piko-server-ihitlh-1-web.middlewares=redirect-to-https@file
+      - traefik.http.routers.piko-server-ihitlh-1-web.service=piko-server-ihitlh-1-web
+      - traefik.http.services.piko-server-ihitlh-1-web.loadbalancer.server.port=80
+
+      # HTTPS Router
+      - traefik.http.routers.piko-server-ihitlh-1-websecure.rule=Host(`piko.urikaa.com`)
+      - traefik.http.routers.piko-server-ihitlh-1-websecure.entrypoints=websecure
+      - traefik.http.routers.piko-server-ihitlh-1-websecure.tls.certresolver=letsencrypt
+      - traefik.http.routers.piko-server-ihitlh-1-websecure.service=piko-server-ihitlh-1-websecure
+      - traefik.http.services.piko-server-ihitlh-1-websecure.loadbalancer.server.port=80
 
   prometheus:
     image: prom/prometheus:latest
@@ -89,3 +107,5 @@ networks:
   piko-network:
     driver: bridge
     name: piko-network
+  dokploy-network:
+    external: true
