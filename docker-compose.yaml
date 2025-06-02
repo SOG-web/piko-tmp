@@ -11,6 +11,8 @@ services:
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
+    networks:
+      - piko-network
 
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
@@ -23,6 +25,8 @@ services:
       - --cluster.node-id-prefix
       - piko-2-
     hostname: piko-2
+    networks:
+      - piko-network
 
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
@@ -35,6 +39,8 @@ services:
       - --cluster.node-id-prefix
       - piko-3-
     hostname: piko-3
+    networks:
+      - piko-network
 
   load-balancer:
     image: caddy:latest
@@ -50,6 +56,8 @@ services:
       - 8180:8000
       - 8181:8001
       - 8182:8002
+    networks:
+      - piko-network
 
   prometheus:
     image: prom/prometheus:latest
@@ -64,6 +72,8 @@ services:
       - "piko-3"
     ports:
       - 9090:9090
+    networks:
+      - piko-network
 
   grafana:
     image: grafana/grafana:latest
@@ -72,6 +82,8 @@ services:
       - GF_LOG_LEVEL=critical
     ports:
       - 3100:3000
+    networks:
+      - piko-network
 
 networks:
   piko-network:
