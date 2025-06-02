@@ -11,6 +11,8 @@ services:
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
+    ports:
+      - 8000
     networks:
       - piko-network
       - dokploy-network
