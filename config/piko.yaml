@@ -1,0 +1,22 @@
+proxy:
+  bind_addr: ":8000"
+
+upstream:
+  # The host/port to listen for incoming upstream connections.
+  #
+  # If the host is unspecified it defaults to all listeners, such as
+  # '--upstream.bind-addr :8001' will listen on '0.0.0.0:8001'.
+  bind_addr: ":8001"
+
+admin:
+  # The host/port to listen for incoming admin connections.
+  #
+  # If the host is unspecified it defaults to all listeners, such as
+  # '--admin.bind-addr :8002' will listen on '0.0.0.0:8002'.
+  bind_addr: ":8002"
+
+cluster:
+  join:
+    - piko-1
+    - piko-2
+    - piko-3

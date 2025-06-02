@@ -3,11 +3,11 @@ services:
   piko-1:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/config/piko
+      - ./config/piko.yaml:/etc/piko.yaml
     command:
       - server
       - --config.path
-      - /config/piko/piko.yml
+      - /etc/piko.yaml
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
@@ -21,11 +21,11 @@ services:
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/config/piko
+      - ./config/piko.yaml:/etc/piko.yaml
     command:
       - server
       - --config.path
-      - /config/piko/piko.yml
+      - /etc/piko.yaml
       - --cluster.node-id-prefix
       - piko-2-
     hostname: piko-2
@@ -39,11 +39,11 @@ services:
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
     volumes:
-      - ./config/piko:/config/piko
+      - ./config/piko.yaml:/etc/piko.yaml
     command:
       - server
       - --config.path
-      - /config/piko/piko.yml
+      - /etc/piko.yaml
       - --cluster.node-id-prefix
       - piko-3-
     hostname: piko-3
