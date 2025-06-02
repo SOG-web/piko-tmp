@@ -11,10 +11,6 @@ services:
       - --cluster.node-id-prefix
       - piko-1-
     hostname: piko-1
-    ports:
-      - 8000
-      - 8001
-      - 8002
     networks:
       - piko-network
       - dokploy-network
@@ -30,10 +26,6 @@ services:
       - --cluster.node-id-prefix
       - piko-2-
     hostname: piko-2
-    ports:
-      - 8000
-      - 8001
-      - 8002
     networks:
       - piko-network
       - dokploy-network
@@ -49,10 +41,6 @@ services:
       - --cluster.node-id-prefix
       - piko-3-
     hostname: piko-3
-    ports:
-      - 8000
-      - 8001
-      - 8002
     networks:
       - piko-network
       - dokploy-network
