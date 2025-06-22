@@ -50,14 +50,14 @@ services:
       - "piko-2"
       - "piko-3"
     ports:
-     - 8001:8001
+     - 8001
     networks:
       - piko-internal
 
   proxy-server:
     build: ./piko-server
     ports:
-      - "8000:3000"
+      - 3000
     environment:
       - API_USERNAME=admin
       - API_PASSWORD=secure123
