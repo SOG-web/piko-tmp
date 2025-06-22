@@ -10,6 +10,8 @@ services:
     hostname: piko-1
     volumes:
       - ./config/piko.yaml:/etc/piko.yaml
+    networks:
+      - piko-internal
 
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
@@ -22,6 +24,8 @@ services:
     hostname: piko-2
     volumes:
       - ./config/piko.yaml:/etc/piko.yaml
+    networks:
+      - piko-internal
 
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
@@ -34,6 +38,8 @@ services:
     hostname: piko-3
     volumes:
       - ./config/piko.yaml:/etc/piko.yaml
+    networks:
+      - piko-internal
 
   load-balancer:
     image: caddy:latest
@@ -43,10 +49,20 @@ services:
       - "piko-1"
       - "piko-2"
       - "piko-3"
+    networks:
+      - piko-internal
+
+  proxy-server:
+    build: ./piko-server
     ports:
-      - 8000:8000
-      - 8001:8001
-      - 8002:8002
+      - "3000:3000"
+    environment:
+      - API_USERNAME=admin
+      - API_PASSWORD=secure123
+    depends_on:
+      - load-balancer
+    networks:
+      - piko-internal
 
   # prometheus:
   #   image: prom/prometheus:latest
@@ -71,6 +87,6 @@ services:
   #     - 3000:3000
 
 networks:
-  piko-network:
+  piko-internal:
     driver: bridge
-    name: piko-network
+    name: piko-internal
