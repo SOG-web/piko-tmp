@@ -16,7 +16,7 @@ const API_PASSWORD = process.env.API_PASSWORD || "password";
 // Health check (no auth required)
 app.get("/", (c) => {
 	return c.json({
-		message: "Piko Proxy Server",
+		message: "Monitor Server",
 		status: "healthy",
 	});
 });
