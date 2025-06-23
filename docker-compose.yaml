@@ -50,7 +50,7 @@ services:
     volumes:
       - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
     environment:
-      - CF_API_TOKEN=${CF_API_TOKEN?You need to set your Cloudflare API token}
+      - CF_API_TOKEN=${CF_API_TOKEN}
     depends_on:
       - "piko-1"
       - "piko-2"
@@ -67,8 +67,8 @@ services:
     ports:
       - 3000
     environment:
-      - API_USERNAME=admin
-      - API_PASSWORD=secure123
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
     depends_on:
       - load-balancer
     networks:
