@@ -1,9 +1,28 @@
-:8000 {
-	reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
+(cloudflare_tls) {
+	tls {
+		dns cloudflare {env.CF_API_TOKEN}
+		# Uncomment the line below if you have issues with DNS propagation.
+		# resolvers 1.1.1.1
+	}
 }
 
-:8001 {
+# Domain for your Piko upstream connections (for urdc.go clients)
+# Clients will connect to wss://piko.your-domain.com
+urdt.nodeguardapps.com.ng {
+	import cloudflare_tls
 	reverse_proxy piko-1:8001 piko-2:8001 piko-3:8001
+}
+
+# Domain for your admin/API interface
+ertad.nodeguardapps.com.ng {
+	import cloudflare_tls
+	reverse_proxy proxy-server:3000
+}
+
+# --- Internal-only load balancing for the proxy-server ---
+
+:8000 {
+	reverse_proxy piko-1:8000 piko-2:8000 piko-3:8000
 }
 
 :8002 {
