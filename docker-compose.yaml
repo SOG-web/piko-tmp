@@ -1,6 +1,7 @@
 services:
   piko-1:
     image: ghcr.io/andydunstall/piko:latest
+    restart: unless-stopped
     command:
       - server
       - --config.path
@@ -15,6 +16,7 @@ services:
 
   piko-2:
     image: ghcr.io/andydunstall/piko:latest
+    restart: unless-stopped
     command:
       - server
       - --config.path
@@ -29,6 +31,7 @@ services:
 
   piko-3:
     image: ghcr.io/andydunstall/piko:latest
+    restart: unless-stopped
     command:
       - server
       - --config.path
@@ -43,10 +46,11 @@ services:
 
   load-balancer:
     build: ./caddy
+    restart: unless-stopped
     volumes:
       - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
     environment:
-      - CF_API_TOKEN=${CF_API_TOKEN}
+      - CF_API_TOKEN=${CF_API_TOKEN?You need to set your Cloudflare API token}
     depends_on:
       - "piko-1"
       - "piko-2"
@@ -59,11 +63,12 @@ services:
 
   proxy-server:
     build: ./piko-server
+    restart: unless-stopped
     ports:
       - 3000
     environment:
-      - API_USERNAME=${API_USERNAME}
-      - API_PASSWORD=${API_PASSWORD}
+      - API_USERNAME=admin
+      - API_PASSWORD=secure123
     depends_on:
       - load-balancer
     networks:
