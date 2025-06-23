@@ -23,7 +23,7 @@ app.get("/", (c) => {
 
 // Apply auth guard to protected routes
 app.use(
-	"/client",
+	"/client/*",
 	basicAuth({
 		username: API_USERNAME,
 		password: API_PASSWORD,
@@ -39,8 +39,10 @@ app.use(
 );
 
 // Forward all requests to Piko cluster
-app.all("/client", (c) => {
-	return proxy(PIKO_BASE_URL, {
+app.all("/client/*", (c) => {
+	console.log("Proxy request to Piko cluster", PIKO_BASE_URL);
+	const path = c.req.path.replace("/client", "");
+	return proxy(`${PIKO_BASE_URL}${path}`, {
 		...c.req,
 		headers: {
 			...c.req.header(),
